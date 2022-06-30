@@ -1,6 +1,8 @@
 import React from 'react';
 import Navigation from './component/Navigation/Navigation';
 import Logo from './component/Logo/Logo';
+import ImageLinkForm from './component/ImageLinkForm/ImageLinkForm';
+import Rank from './component/Rank/Rank';
 import './App.css';
 
 function App() {
@@ -8,8 +10,8 @@ function App() {
     <div className="App">
       <Navigation/>
       <Logo/>
-      {/* <Rank/>
-      <Navagation/> */}
+      <ImageLinkForm/>
+      <Rank/>
     </div>
   );
 }

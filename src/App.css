@@ -4,7 +4,7 @@ body {
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
-  font-family: sans-serif;
+  font-family: 'Courier New', Courier, monospace;
   background: linear-gradient(90deg, rgba(198,232,222,1) 0%, rgba(117,226,164,1) 49%, rgba(154,225,242,1) 100%);
   
 }
@@ -12,5 +12,9 @@ body {
 .Navigation {
   display: flex;
   justify-content: flex-end;
+}
+
+button {
+  cursor: pointer;
 }
 
