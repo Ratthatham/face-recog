@@ -4,8 +4,10 @@ function Rank() {
     return(
         <div className = 'Rank'>
             <div className = 'white f3'>
-                {'Ratthatham, Your Rank is...'}
+                {'Ratthatham, Your Rank is... #5'}
+                
             </div>
+            
             
             
         </div>
