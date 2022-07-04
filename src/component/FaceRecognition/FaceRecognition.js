@@ -1,10 +1,13 @@
 import React from "react";
 
-function FaceRecognition({imageUrl}) {
+function FaceRecognition({value}) {
     return(
         <div className="FaceRecognition">
-            <img alt = 'img' src= {imageUrl} />
-            
+            <div className="img br2">
+                <img alt = '' src= {value} width='400px' height='auto'/>
+                
+            </div>
+
         </div>
     );
 }

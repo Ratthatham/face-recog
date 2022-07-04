@@ -23,7 +23,12 @@ button {
 }
 
 .FaceRecognition {
+  border: none;
+  margin: 20px;
   text-align: center;
-  margin-top: 20px;
 }
 
+.img img{
+  border-radius: 20px;
+  box-shadow: 9px 9px 34px -16px rgba(0,0,0,0.43);
+}

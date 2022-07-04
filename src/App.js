@@ -9,7 +9,8 @@ import './App.css';
 
 function App() {
   //set state เพื่ออับเดทค่า
-  const [Input, setInput] = useState('');
+  const [input, setInput] = useState('');
+  
     
   //ฟังชั่นอับเดทค่าที่พิมพ์
   function onChange(event){
@@ -19,14 +20,14 @@ function App() {
   }
   
   //ฟังชั่นClick
-  function onButtonClick(){   
+  function onButtonClick(){  
     console.log('click');
-    faceDetection();
+    faceDetection(input);
     
   }
 
   //ฟังชั่นเชื่อม API
-  function faceDetection () {
+  function faceDetection (input) {
     const USER_ID = 'earth_04739';
     // Your PAT (Personal Access Token) can be found in the portal under Authentification
     const PAT = '23b0e7e8e92f4eb6bb85b0f09e9d24b0';
@@ -34,7 +35,7 @@ function App() {
     const MODEL_ID = 'face-detection';
     const MODEL_VERSION_ID = '45fb9a671625463fa646c3523a3087d5';
     // Change this to whatever image URL you want to process
-    const IMAGE_URL = 'https://www.facebeautyscience.com/wp-content/uploads/2020/04/face-beauty-skin-face2-proc.jpg';
+    const IMAGE_URL = input;
     console.log(IMAGE_URL);
     
     
@@ -77,17 +78,18 @@ function App() {
     .catch(error => console.log('error', error));
     
   }
-  
+
   return (
     <div className="App">
       <Navigation/>
       <Logo/>
       <Rank/>
       <ImageLinkForm 
-      value = {Input} 
-      onClick = {onButtonClick} 
-      onChange = {onChange} />
-      <FaceRecognition imageUrl = {Input}/>
+        value= {input} 
+        onClick= {onButtonClick} 
+        onChange= {onChange} 
+      />
+      <FaceRecognition value = {input}/>
     </div>
   );
 }
