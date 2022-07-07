@@ -10,8 +10,8 @@ import './App.css';
 function App() {
   //set state เพื่ออับเดทค่า
   const [input, setInput] = useState('');
+  const [data, setData] = useState({});
   
-    
   //ฟังชั่นอับเดทค่าที่พิมพ์
   function onChange(event){
     setInput(event.target.value);
@@ -23,8 +23,27 @@ function App() {
   function onButtonClick(){  
     console.log('click');
     faceDetection(input);
+    console.log(data.bottomRow);
     
   }
+
+  //ฟังชั่นคำนวณกรอบพื้นที่ของใบหน้า
+  function calculateFaceLocation(data){
+    const clarify = JSON.parse(data).outputs[0].data.regions[0].region_info.bounding_box;
+    const image = document.getElementById('inputimage');
+    const width = Number(image.width);
+    const height = Number(image.height);
+    return {
+      leftCol : clarify.left_col * width,
+      topRow : clarify.top_row * height,
+      rightCol : width-(clarify.right_col * width),
+      bottomRow : height-(clarify.bottom_row * height)
+    }   
+  }
+  
+  // displayFaceBox = (box) => {
+
+  // } // กำลังจะสร้างกรอบสี่เหลี่ยมบนใบหน้า
 
   //ฟังชั่นเชื่อม API
   function faceDetection (input) {
@@ -74,7 +93,7 @@ function App() {
     
     fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
     .then(response => response.text())
-    .then(result => console.log(result))
+    .then(result => setData(calculateFaceLocation(result)))
     .catch(error => console.log('error', error));
     
   }
