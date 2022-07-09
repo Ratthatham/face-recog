@@ -4,13 +4,16 @@ import Logo from './component/Logo/Logo';
 import ImageLinkForm from './component/ImageLinkForm/ImageLinkForm';
 import Rank from './component/Rank/Rank';
 import FaceRecognition from './component/FaceRecognition/FaceRecognition';
+import Signin from './component/Signin/Signin';
 import './App.css';
+import Register from './component/Register/Register';
 
 
 function App() {
   //set state เพื่ออับเดทค่า
   const [input, setInput] = useState('');
   const [box, setData] = useState({});
+  const [route, setRoute] = useState('signin');
   
   //ฟังชั่นอับเดทค่าที่พิมพ์
   function onChange(event){
@@ -99,20 +102,33 @@ function App() {
     
   }
 
+  function onRouteChange(route){
+    setRoute(route)
+  }
+
   return (
     <div className="App">
-      <Navigation/>
-      <Logo/>
-      <Rank/>
-      <ImageLinkForm 
-        value= {input} 
-        onClick= {onButtonClick} 
-        onChange= {onChange} 
-      />
-      <FaceRecognition 
-      value = {input}
-      box= {box}
-      />
+      {route==='home'
+          ? <div>
+              <Navigation onRouteChange={onRouteChange}/>
+              <Logo/>
+              <Rank/>
+              <ImageLinkForm 
+                value= {input} 
+                onClick= {onButtonClick} 
+                onChange= {onChange} 
+              />
+              <FaceRecognition 
+              value = {input}
+              box= {box}
+              />
+            </div>
+            : (
+              route === 'signin'
+              ?<Signin onRouteChange = {onRouteChange}/>
+              :<Register onRouteChange={onRouteChange}/>
+              )
+      }
     </div>
   );
 }
