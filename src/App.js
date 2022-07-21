@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Navigation from './component/Navigation/Navigation';
 import Logo from './component/Logo/Logo';
 import ImageLinkForm from './component/ImageLinkForm/ImageLinkForm';
@@ -14,6 +14,20 @@ function App() {
   const [input, setInput] = useState('');
   const [box, setData] = useState({});
   const [route, setRoute] = useState('signin');
+  const [user, setUser] = useState({
+    input: '',
+    imageUrl: '',
+    box: {},
+    route: 'signin',
+    isSignedIn: false,
+    user: {
+      id: '',
+      name: '',
+      email: '',
+      entries: 0,
+      joined: ''
+    }
+  });
   
   //ฟังชั่นอับเดทค่าที่พิมพ์
   function onChange(event){
@@ -96,7 +110,22 @@ function App() {
     
     fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
     .then(response => response.text())
-    .then(result => displayFaceBox(calculateFaceLocation(result)))
+    .then(result => {
+      if(result){
+        fetch('http://localhost:3000/image',{
+          method : 'put',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+              id: user.user.id
+          })
+        })
+          .then(result => result.json())
+          .then(count => {
+            setUser(Object.assign(user, {user:{entries:count}})) //ติดปัญหาตรงนี้ 
+          })
+      }
+      displayFaceBox(calculateFaceLocation(result))
+    })
     .catch(error => console.log('error', error));
     
   }
@@ -105,13 +134,24 @@ function App() {
     setRoute(route)
   }
 
+  function loadUser(data){
+    setUser({user: {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      entries: data.entries,
+      joined: data.joined
+    }
+    })
+  }
+
   return (
     <div className="App">
       {route==='home'
           ? <div>
               <Navigation onRouteChange={onRouteChange}/>
               <Logo/>
-              <Rank/>
+              <Rank userName = {user.user.name} userEntries = {user.user.entries}/>
               <ImageLinkForm 
                 value= {input} 
                 onClick= {onButtonClick} 
@@ -124,8 +164,8 @@ function App() {
             </div>
             : (
               route === 'signin'
-              ?<Signin onRouteChange = {onRouteChange}/>
-              :<Register onRouteChange={onRouteChange}/>
+              ?<Signin loadUser = {loadUser} onRouteChange = {onRouteChange}/>
+              :<Register loadUser={loadUser} onRouteChange={onRouteChange}/>
               )
       }
     </div>
