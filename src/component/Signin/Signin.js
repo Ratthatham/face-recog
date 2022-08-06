@@ -6,12 +6,12 @@ function Signin({onRouteChange, loadUser}) {
     const [signInPassword, setSignInPassword] = useState('');
 
     function onEmailChange(event){
-        console.log("Email", signInEmail);
+        // console.log("Email", signInEmail);
         setSignInEmail(event.target.value);
     }
 
     function onPasswordChange(event){
-        console.log("password", signInPassword);
+        // console.log("password", signInPassword);
         setSignInPassword(event.target.value);
     }
 
@@ -28,12 +28,12 @@ function Signin({onRouteChange, loadUser}) {
             .then(response => response.json())
             .then(user => {
                 if(user.id){
-                    console.log(user.id);
+                    // console.log(user.id);
                     loadUser(user);
                     onRouteChange('home');
                 }
             })
-        console.log("Signin Completed" ,signInEmail);
+        // console.log("Signin Completed" ,signInEmail);
     }
 
     return(

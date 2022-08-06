@@ -8,37 +8,38 @@ import Signin from './component/Signin/Signin';
 import Register from './component/Register/Register';
 import './App.css';
 
+const initialState = {
+  input: '',
+  imageUrl: '',
+  box: {},
+  route: 'signin',
+  isSignedIn: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    entries: 0,
+    joined: ''
+  }
+}
 
 function App() {
   //set state เพื่ออับเดทค่า
   const [input, setInput] = useState('');
   const [box, setData] = useState({});
   const [route, setRoute] = useState('signin');
-  const [user, setUser] = useState({
-    input: '',
-    imageUrl: '',
-    box: {},
-    route: 'signin',
-    isSignedIn: false,
-    user: {
-      id: '',
-      name: '',
-      email: '',
-      entries: 0,
-      joined: ''
-    }
-  });
+  const [user, setUser] = useState(initialState);
   
   //ฟังชั่นอับเดทค่าที่พิมพ์
   function onChange(event){
     setInput(event.target.value);
-    console.log('Set input : '+ event.target.value);
+    // console.log('Set input : '+ event.target.value);
     // console.log('Input : '+ Input);  
   }
   
   //ฟังชั่นClick
   function onButtonClick(){  
-    console.log('click');
+    // console.log('click');
     faceDetection(input);
     // console.log(data);
   }
@@ -72,7 +73,7 @@ function App() {
     const MODEL_VERSION_ID = '45fb9a671625463fa646c3523a3087d5';
     // Change this to whatever image URL you want to process
     const IMAGE_URL = input;
-    console.log(IMAGE_URL);
+    // console.log(IMAGE_URL);
     
     
     ///////////////////////////////////////////////////////////////////////////////////
@@ -123,6 +124,7 @@ function App() {
           .then(count => {
             setUser(Object.assign(user, {user:{entries:count}})) //ติดปัญหาตรงนี้ 
           })
+          .catch(console.log())
       }
       displayFaceBox(calculateFaceLocation(result))
     })
@@ -131,6 +133,9 @@ function App() {
   }
 
   function onRouteChange(route){
+    if(route === 'signin'){
+      setInput('')
+    }
     setRoute(route)
   }
 

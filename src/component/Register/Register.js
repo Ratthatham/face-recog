@@ -30,8 +30,8 @@ function Register({onRouteChange, loadUser}) {
         })
             .then(response => response.json())
             .then(user => {
-                if(user){
-                    loadUser(user);
+                if(user.id){
+                    loadUser(user.id);
                     onRouteChange('signin');
                 }
             })
